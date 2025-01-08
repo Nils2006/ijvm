@@ -48,7 +48,8 @@ fn main() -> io::Result<()> {
             0b10100111 => {
                 //GOTO
                 let offset: i16 = (buffer[pc + 1] as i16) << 8 | buffer[pc + 2] as i16;
-                pc += offset as usize;
+                let newpc:isize = pc.clone() as isize + offset as isize;
+                pc = newpc as usize;
             },
             0b01100000 => {
                 //IADD
@@ -73,7 +74,8 @@ fn main() -> io::Result<()> {
                 if let Some(a) = stack.pop_front() {
                     if a == 0 {
                         let offset: i16 = (buffer[pc + 1] as i16) << 8 | buffer[pc + 2] as i16;
-                        pc += offset as usize;
+                        let newpc:isize = pc.clone() as isize + offset as isize;
+                        pc = newpc as usize;
                     } else {
                         pc += 3;
                     }
@@ -86,7 +88,8 @@ fn main() -> io::Result<()> {
                 if let Some(a) = stack.pop_front() {
                     if a < 0 {
                         let offset: i16 = (buffer[pc + 1] as i16) << 8 | buffer[pc + 2] as i16;
-                        pc += offset as usize;
+                        let newpc:isize = pc.clone() as isize + offset as isize;
+                        pc = newpc as usize;
                     }else {
                         pc += 3;
                     }
@@ -99,7 +102,8 @@ fn main() -> io::Result<()> {
                 if let (Some(a), Some(b)) = (stack.pop_front(), stack.pop_front()) {
                     if a == b {
                         let offset: i16 = (buffer[pc + 1] as i16) << 8 | buffer[pc + 2] as i16;
-                        pc += offset as usize;
+                        let newpc:isize = pc.clone() as isize + offset as isize;
+                        pc = newpc as usize;
                     } else {
                         pc += 3;
                     }
